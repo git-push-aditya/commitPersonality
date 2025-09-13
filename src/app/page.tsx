@@ -8,10 +8,23 @@ import animationData from "../components/1.Our process.json";
 import ScrollFloat from '../components/ScrollFloat';
 import { useEffect, useRef } from "react";
 import Lenis from "@studio-freight/lenis";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { PersonalityCard } from "./personalityCard";
+import { GithubIcon } from "./icons";
+import { useRefs } from "./RefsContext";
+
+gsap.registerPlugin(ScrollTrigger);
+
+export const openProfile = ({ hyperlink }: { hyperlink: string }) => {
+  window.open(hyperlink, "_blank", "noopener,noreferrer");
+}
 
 
-export default function Home() { 
-    useEffect(() => {
+
+
+export default function Home() {
+  useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -27,13 +40,49 @@ export default function Home() {
   }, []);
 
 
+
   const pointer = "text-[1.5rem] font-bold font-newTitile";
   const def = " text-[1.4rem] text-gray-700 tracking-wide ";
-  const containerRef = useRef<HTMLDivElement>(null)
+  const howSectionRef = useRef<HTMLDivElement>(null);
+
+  const {developerRef, testRef, personalitiesRef, storiesRef} = useRefs();
+
+
+  useEffect(() => {
+    gsap.from(howSectionRef.current, {
+      scrollTrigger: {
+        trigger: howSectionRef.current,
+        start: "top 70%",
+        toggleActions: "play none none reverse",
+      },
+      opacity: 0,
+      y: 100,
+      duration: 0.5,
+      ease: "back.inOut(2)",
+    });
+  }, []);
+
+  useEffect(() => {
+    gsap.from(developerRef.current, {
+      scrollTrigger: {
+        trigger: developerRef.current,
+        start: "top 95%",
+        toggleActions: "play none none reverse",
+      },
+      opacity: 0,
+      y: 40,
+      duration: 0.5,
+      ease: "back.inOut(2)",
+    });
+  }, []);
+
+
 
   return (
-    <div className="overflow-x-hidden">
-      <div className="relative overflow-hidden h-screen w-screen">
+    <div className="overflow-x-hidden overflow-y-hidden">
+      <div 
+        ref={testRef}
+        className="relative overflow-hidden h-screen w-screen">
         <div className="relative z-20 flex flex-col items-start justify-center h-full w-full  ml-50 -translate-y-30 font-heading">
           <motion.div
             initial={{ opacity: 0 }}
@@ -65,7 +114,8 @@ export default function Home() {
               threshold={0.1}
               rootMargin="0px"
               textAlign="center"
-            /></motion.div>
+            />
+          </motion.div>
           <motion.div
             initial={{ y: 5, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -109,68 +159,145 @@ export default function Home() {
             muted
             playsInline
             controls={false}
-          /></motion.div>
+          />
+        </motion.div>
       </div>
       <div
-        className=" flex justify-center items-center my-10 mx-auto gap-x-32">
-        <div className=" w-[30%] h-[30%] ">
-          <Lottie animationData={animationData} loop={true} />
-        </div>
+        className=" w-[100%] rounded-[5rem] bg-blue-100/30 m-0 pb-40 border-1">
         <div
-          className="flex flex-col justify-center items-center">
+          ref={howSectionRef}
+          className=" flex justify-center items-center mx-auto gap-x-32 h-[90%] pt-50 pb-20 w-screen">
+          <div className=" w-[30%] h-[30%] ">
+            <Lottie animationData={animationData} loop={true} />
+          </div>
           <div
-            className="text-[4.5rem] font-[2rem] my-4 font-averie">
-            How it works :
+            className="flex flex-col justify-center items-center">
+            <div
+              className="text-[4.5rem] font-[2rem] my-4 font-averie">
+              How it works :
+            </div>
+            <div className="pl-18">
+              <div
+                className={pointer}>1.Click "Take Test" -<span className={def}>start instantly, no signup hassle.</span></div>
+              <div
+                className={pointer}>2.Enter your GitHub ID -<span className={def}>we pull your commit messages.</span></div>
+              <div
+                className={pointer}>3.Get your personality type- <span className={def}>analyzed, fun, and surprisingly accurate.</span></div>
+            </div>
           </div>
-          <div className="pl-18">
-            <div
-              className={pointer}>1.Click "Take Test" -<span className={def}>start instantly, no signup hassle.</span></div>
-            <div
-              className={pointer}>2.Enter your GitHub ID -<span className={def}>we pull your commit messages.</span></div>
-            <div
-              className={pointer}>3.Get your personality type- <span className={def}>analyzed, fun, and surprisingly accurate.</span></div>
-          </div>
-        </div>
-
-      </div>
-      <div className="h-screen w-screen flex  flex-col justify-center items-center">
-      <div
-        className=" text-[3rem]  scale-60 font-averie">
-        <ScrollFloat
-          animationDuration={1}
-          ease='back.inOut(2)'
-          scrollStart='center bottom+=30%'
-          scrollEnd='bottom bottom-=40%'
-          textClassName=" text-[5rem] tracking-tighter " 
-          stagger={0.03}
-          scrollContainerRef={undefined}
-          >
-          “Behind every bug fix,
-          there's a piece of you."
-        </ScrollFloat>
         </div>
         <div
-        className=" scale-23 font-averie -mt-35">
-          <ScrollFloat
-            animationDuration={1}
-            ease='back.inOut(2)'
-            scrollStart='center bottom+=30%'
-            scrollEnd='bottom bottom-=40%'
-            textClassName=" text-[5rem] tracking-tighter text-purple-900 " 
-            stagger={0.03}
-            scrollContainerRef={undefined}
+          className="h-screen w-screen flex  flex-col justify-center items-center">
+          <div
+            className=" text-[3rem]  scale-60 font-averie">
+            <ScrollFloat
+              animationDuration={1}
+              ease='back.inOut(2)'
+              scrollStart='center bottom+=30%'
+              scrollEnd='bottom bottom-=40%'
+              textClassName=" text-[5rem] tracking-tighter "
+              stagger={0.03}
+              scrollContainerRef={undefined}
             >
-            -Team commitPersonality
-          </ScrollFloat>        
-      </div>
-      </div>
+              “Behind every bug fix,
+              there's a piece of you."
+            </ScrollFloat>
+          </div>
+          <div
+            className=" scale-23 font-averie -mt-35">
+            <ScrollFloat
+              animationDuration={1}
+              ease='back.inOut(2)'
+              scrollStart='center bottom+=30%'
+              scrollEnd='bottom bottom-=40%'
+              textClassName=" text-[5rem] tracking-tighter text-pur
+            ple-900 "
+              stagger={0.03}
+              scrollContainerRef={undefined}
+            >
+              -Team commitPersonality
+            </ScrollFloat>
+          </div>
+        </div>
 
 
-      {/* Personality type section */}
-      <div 
-        className="">
-          
+        {/* Personality type section */}
+        <motion.div
+          ref={personalitiesRef}
+          className="text-[2.8rem] font-heading ml-40 my-10"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true }} >
+          Personalities :
+        </motion.div>
+        <div
+          className=" w-screen">
+          <PersonalityCard
+            Photo={"p1"}
+            Name={"Conventional Connie"}
+            OneLine={"The strict librarian of commits who thinks Git is the holy scripture."}
+            Behaviour={"Connie whispers the Conventional Commits spec like a bedtime prayer. She refuses to commit until every word is lowercase, every scope is labeled, and every breaking change is marked with the drama it deserves."}
+            repoSideEffects={"Opens PRs correcting your grammar.The history looks so polished you’d think it was generated by AI. Future devs love her, but teammates secretly roll their eyes when she corrects “feat” vs. “fix” for the 12th time."}
+          />
+          <PersonalityCard
+            Photo={"p2"}
+            Name={"Hotfix Hank"}
+            OneLine={"The 3 A.M. hero who saves production with duct tape and vibes."}
+            Behaviour={"Hank commits like he’s defusing a bomb — sweaty palms, racing heart, and a message that just says “pls work.” If code breaks, you’ll find him muttering “just one more quick fix.”"}
+            repoSideEffects={"Logs are a battlefield of half-thoughts: “fixed it,” “really fixed it,” “no seriously fixed it.” Nobody knows what happened, but hey — the app runs."}
+          />
+          <PersonalityCard
+            Photo={"p3"}
+            Name={"Verbose Vera"}
+            OneLine={"The Shakespeare of commits who writes sonnets instead of summaries."}
+            Behaviour={"Vera treats every commit like a memoir. She includes the what, why, how, emotional context, and sometimes even what she had for lunch while debugging. Reading her commits is like attending a TED Talk."}
+            repoSideEffects={"Future devs have way too much context. The logs are insanely helpful, but you’ll need a coffee refill just to scroll through them."}
+          />
+          <PersonalityCard
+            Photo={"p4"}
+            Name={"Amendable Andy"}
+            OneLine={"The time traveler who edits history like it’s his personal diary."}
+            Behaviour={"Andy can’t resist rewording commits, squashing them into “masterpieces,” and force-pushing with a smug smile. He believes “git log” should look like an art gallery wall — no rough drafts allowed."}
+            repoSideEffects={"Everything looks flawless, but teammates quietly panic when their branches explode after his rebases. The repo is spotless, but also mildly terrifying."}
+          />
+        </div>
       </div>
+
+      <div
+        ref={developerRef}>
+        <div
+          className="text-[2.8rem] font-heading ml-40 mt-30">
+          Meet the Developer :
+        </div>
+        <div
+          className="flex items-center justify-center gap-20 mt-10 mb-40 mx-20">
+          <div
+            className="w-[20%]">
+            <img
+              src={"/me.png"}
+              className=" rounded-[12rem] scale-110"
+            />
+          </div>
+          <div
+            className="w-[60%] text-[1.4rem]  font-newTitile px-8 text-justify">
+            <p>
+              I’m Aditya, a 20-year-old developer with a strong passion for web development and DevOps. I love exploring how modern web technologies and cloud-native tools come together to create scalable, reliable, and user-friendly systems. Hackathons have been a big part of my journey — I enjoy the thrill of solving problems under tight deadlines, collaborating with teammates, and turning abstract ideas into working prototypes.</p>
+            <p><br />
+              Beyond the adrenaline of hackathons, I spend time experimenting with new stacks, refining my skills in containerization, orchestration, and automation, and constantly learning how to streamline development workflows. For me, building isn’t just about writing code — it’s about designing experiences, solving real challenges, and adding my own creative flavor to every project. My path so far has been full of trials and learning curves, but those moments have only strengthened my drive to keep pushing boundaries and making tech that feels alive.</p><br />
+
+            <p>
+              <GithubIcon
+                dim="50"
+                style=" cursor-pointer hover:text-orange-600 transition-hover duration-200"
+                onClickHandler={() => openProfile({ hyperlink: "https://github.com/git-push-aditya" })}
+              />
+            </p>
+
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }

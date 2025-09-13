@@ -1,6 +1,7 @@
 import type { Metadata } from "next"; 
 import "./globals.css";
 import TopBar from "./topbar";
+import { RefsProvider } from "./RefsContext";
 
 export const metadata: Metadata = {
   title: "commitPersonality | Analyze Your GitHub Commit Personality",
@@ -55,9 +56,11 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`scrollbarMC`}
-      >
+      > 
+        <RefsProvider>
         <TopBar />
         {children} 
+        </RefsProvider>
       </body>
     </html>
   );
