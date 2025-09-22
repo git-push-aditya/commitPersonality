@@ -1,19 +1,28 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import { GithubIcon, TwitterIcon } from "./icons";
+import { CrossTopBar, GithubIcon, TopBarSVG, TwitterIcon } from "./icons";
 import { useRef, useEffect, useState } from "react";
 import { openProfile } from "./page";
 import { useRefs } from "./RefsContext";
-
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu"
 export default function TopBar() {
     const { developerRef, testRef, personalitiesRef, storiesRef } = useRefs();
 
     const GetInView = ({ selectedRef }: { selectedRef: React.RefObject<HTMLDivElement | null> }) => {
         selectedRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    
 
-    const tabStyle = " hover:text-black text-[1.4rem] font-[2rem] text-gray-600 transition-hover hover:-translate-y-1 duration-200 ";
+    const [topBar, setTopBar] = useState<boolean>(false)
+
+
+    const tabStyle = " hover:text-black lg:text-[1.4rem] text-[1.1rem] font-[2rem] text-gray-600 transition-hover hover:-translate-y-1 duration-200 ";
 
     const topbar = useRef<HTMLDivElement | null>(null);
     const [isVisible, setIsVisible] = useState<boolean>()
@@ -43,33 +52,98 @@ export default function TopBar() {
         className="cursor-pointer">
         <div
             ref={topbar}
-            className="flex items-center mt-4 w-[90%] mx-auto py-4 pr-10 font-newTitile text-2xl pl-16"
+            className="flex justify-between items-center mt-4 lg:w-[90%] md:w-[96%] w-full mx-auto py-4 xl:pr-10 md:pr-7 pr-5 font-newTitile text-2xl xl:pl-16 md:pl-10 pl-8"
         >
             <div
-                className="text-[1.8rem] font-heading font-[0.5rem]">commitPersonality</div>
+                className="xl:text-[1.8rem] text-[1.6rem] font-heading font-[0.5rem]">commitPersonality</div>
             <div
-                className="flex-1 flex items-center justify-center gap-10 text-slate-300 hover:text-black transition-colors duration-200">
+                className="hidden flex-1 md:flex items-center justify-center lg:gap-10 gap-5 text-slate-300 hover:text-black transition-colors duration-200">
                 <div
-                    className={tabStyle} 
+                    className={tabStyle}
                     onClick={() => GetInView({ selectedRef: testRef })}>Test
                 </div>
                 <div
-                    className={tabStyle} 
+                    className={tabStyle}
                     onClick={() => GetInView({ selectedRef: personalitiesRef })}>Personalities
                 </div>
                 <div
-                    className={tabStyle} 
+                    className={tabStyle}
                     onClick={() => GetInView({ selectedRef: storiesRef })}>Stories
                 </div>
                 <div
-                    className={tabStyle} 
-                    onClick={() => GetInView({ selectedRef: developerRef })}>Creator
+                    className={tabStyle}
+                    onClick={() => GetInView({ selectedRef: developerRef })}>Developer
                 </div>
             </div>
             <div
-                className="flex justify-center items-center gap-6 mr-6">
-                <TwitterIcon dim="43" />
-                <GithubIcon dim="45" style=" cursor-pointer" />
+                className="hidden md:flex justify-center items-center lg:gap-6 gap-4 lg:mr-6 mr-3">
+
+                <TwitterIcon
+                    dim="43"
+                    style="hover:text-blue-800 transition-hover duration-200 xl:size-11 lg:size-10 size-9" />
+                <GithubIcon
+                    dim="45"
+                    style=" cursor-pointer hover:text-orange-600 transition-hover duration-200 xl:size-11 lg:size-10 size-9"
+                    onClickHandler={() => openProfile({ hyperlink: "https://github.com/git-push-aditya/commitPersonality" })}
+                />
+            </div>
+            <div className="flex md:hidden cursor-pointer">
+                <DropdownMenu open={topBar} onOpenChange={setTopBar}>
+                    <DropdownMenuTrigger asChild>
+                        <button
+                            onMouseDown={(e) => e.preventDefault()}
+                            className="flex md:hidden justify-center items-center h-10 cursor-pointer">
+                            {
+                                topBar ? (
+                                    <CrossTopBar
+                                        dim="45"
+                                        style="size-12 mr-2 scale-110 mt-1 cursor-pointer "
+                                        onClickHandler={() => setTopBar(false)}
+                                    />) :
+                                    (<TopBarSVG
+                                        onClickHandler={() => setTopBar(true)}
+                                        dim="45"
+                                        style="size-7 scale-x-120 scale-y-80 mr-4 hover:scale-x-125 hover:scale-y-82 transition-all duration-200 "
+                                    />)
+                            }
+                        </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-screen scale-140 mt-3" align="start">
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem onClick={() => {
+                                setTopBar(false);
+                                setTimeout(() => GetInView({ selectedRef: testRef }), 100);
+                            }}>
+                                Test
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => {
+                                setTopBar(false);
+                                setTimeout(() => GetInView({ selectedRef: personalitiesRef }), 100);
+                            }}>
+                                Personalities
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => {
+                                setTopBar(false);
+                                setTimeout(() => GetInView({ selectedRef: testRef }), 100);
+                            }}>
+                                Stories
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => {
+                                setTopBar(false);
+                                setTimeout(() => GetInView({ selectedRef: developerRef }), 100);
+                            }}>
+                                Developer
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                            onClick={() => openProfile({ hyperlink: "https://x.com/AdityaDtwt" })}> Twitter</DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => openProfile({ hyperlink: "https://github.com/git-push-aditya/commitPersonality" })}>
+                            Github
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
         </div>
 
@@ -81,35 +155,94 @@ export default function TopBar() {
                 animate={{ y: 0, x: 0, opacity: 1 }}
                 exit={{ y: -20, opacity: 0 }}
                 transition={{ duration: 0.2, ease: "easeInOut" }}
-                className={`flex items-center justify-between mt-4 w-[90%] font-newTitile rounded-[2rem] py-4 pr-10 pl-16 mx-auto text-2xl font-bold z-50 fixed top-0 left-0 right-0 left-right-0  backdrop-blur-2xl bg-white/10`}
+                className={`flex items-center justify-between mt-4 lg:w-[90%] w-[96%] font-newTitile rounded-[2rem] py-4 xl:pr-10 md:pr-7 pr-5 xl:pl-16 md:pl-10 pl-8 mx-auto text-2xl font-bold z-50 fixed top-0 left-0 right-0 left-right-0  backdrop-blur-2xl bg-white/10`}
             >
                 <div
-                    className="text-[1.8rem] font-heading">commitPersonality</div>
+                    className="xl:text-[1.8rem] lg:text-[1.6rem] text-[1.5rem] font-heading">commitPersonality</div>
                 <div
-                    className="flex-1 flex items-center justify-center gap-10 text-slate-300 hover:text-black transition-colors duration-200">
+                    className="hidden flex-1 md:flex items-center justify-center lg:gap-10 gap-5 text-slate-300 hover:text-black transition-colors duration-200">
                     <div
-                        className={tabStyle} 
+                        className={tabStyle}
                         onClick={() => GetInView({ selectedRef: testRef })}>Test
                     </div>
                     <div
-                        className={tabStyle} 
+                        className={tabStyle}
                         onClick={() => GetInView({ selectedRef: personalitiesRef })}>Personalities
                     </div>
                     <div
-                        className={tabStyle} 
+                        className={tabStyle}
                         onClick={() => GetInView({ selectedRef: storiesRef })}>Stories
                     </div>
                     <div
-                        className={tabStyle} 
-                        onClick={() => GetInView({ selectedRef: developerRef })}>Creator
+                        className={tabStyle}
+                        onClick={() => GetInView({ selectedRef: developerRef })}>Developer
                     </div>
                 </div>
                 <div
-                    className="flex justify-center items-center gap-6 mr-6">
-                    <TwitterIcon dim="43" style="hover:text-blue-800 transition-hover duration-200" />
-                    <GithubIcon dim="45" style=" cursor-pointer hover:text-orange-600 transition-hover duration-200" onClickHandler={() => openProfile({ hyperlink: "https://github.com/git-push-aditya/commitPersonality" })} />
+                    className="hidden md:flex justify-center items-center lg:gap-6 gap-4 lg:mr-6 mr-3">
+                    <TwitterIcon dim="43" style="hover:text-blue-800 transition-hover duration-200 xl:size-11 size-9" />
+                    <GithubIcon dim="45" style=" cursor-pointer hover:text-orange-600 transition-hover duration-200 xl:size-11 size-9" onClickHandler={() => openProfile({ hyperlink: "https://github.com/git-push-aditya/commitPersonality" })} />
+                </div>
+                <div className="flex md:hidden">
+                    <DropdownMenu open={topBar} onOpenChange={setTopBar}>
+                    <DropdownMenuTrigger asChild>
+                        <button
+                            onMouseDown={(e) => e.preventDefault()}
+                            className="flex md:hidden justify-center items-center h-10 cursor-pointer">
+                            {
+                                topBar ? (
+                                    <CrossTopBar
+                                        dim="45"
+                                        style="size-12 mr-2 scale-110 mt-1 cursor-pointer "
+                                        onClickHandler={() => setTopBar(false)}
+                                    />) :
+                                    (<TopBarSVG
+                                        onClickHandler={() => setTopBar(true)}
+                                        dim="45"
+                                        style="size-7 scale-x-120 scale-y-80 mr-4 hover:scale-x-125 hover:scale-y-82 transition-all duration-200 "
+                                    />)
+                            }
+                        </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-screen scale-140 mt-3" align="start">
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem onClick={() => {
+                                setTopBar(false);
+                                setTimeout(() => GetInView({ selectedRef: testRef }), 100);
+                            }}>
+                                Test
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => {
+                                setTopBar(false);
+                                setTimeout(() => GetInView({ selectedRef: personalitiesRef }), 100);
+                            }}>
+                                Personalities
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => {
+                                setTopBar(false);
+                                setTimeout(() => GetInView({ selectedRef: testRef }), 100);
+                            }}>
+                                Stories
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => {
+                                setTopBar(false);
+                                setTimeout(() => GetInView({ selectedRef: developerRef }), 100);
+                            }}>
+                                Developer
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                            onClick={() => openProfile({ hyperlink: "https://x.com/AdityaDtwt" })}> Twitter</DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => openProfile({ hyperlink: "https://github.com/git-push-aditya/commitPersonality" })}>
+                            Github
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
                 </div>
             </motion.div>}
         </AnimatePresence>
     </motion.div>
 }
+
