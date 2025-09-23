@@ -41,8 +41,8 @@ export default function Home() {
 
 
 
-  const pointer = "text-[1.5rem] font-bold font-newTitile";
-  const def = " text-[1.4rem] text-gray-700 tracking-wide ";
+  const pointer = "lg:text-[1.5rem] text-[1.2rem] font-bold font-newTitile";
+  const def = " lg:text-[1.4rem] text-[1.2rem] text-gray-700 tracking-wide ";
   const howSectionRef = useRef<HTMLDivElement>(null);
 
   const {developerRef, testRef, personalitiesRef, storiesRef} = useRefs();
@@ -83,15 +83,15 @@ export default function Home() {
       <div 
         ref={testRef}
         className="relative overflow-hidden h-screen w-screen">
-        <div className="relative z-20 flex flex-col items-start justify-center h-full w-full  ml-50 -translate-y-30 font-heading">
+        <div className="relative z-20 flex flex-col items-start items-start lg:justify-center h-full w-full 2xl:ml-50  xl:ml-30 lg:ml-20  2xl:-translate-y-30 lg:-translate-y-20 font-heading">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, ease: "easeIn" }}
-            className="flex flex-col items-start">
+            className="flex flex-col mx-auto lg:mx-0 items-start">
             <SplitText
               text="Your commits are roasting you."
-              className="text-black text-[2.9rem] font-bold line-clamp-2 tracking-tighter px-1 m-0"
+              className="text-black 2xl:text-[2.9rem] lg:text-[2.5rem] font-bold line-clamp-2 tracking-tighter px-0 lg:px-1 mt-14 lg:mt-0 text-[2.1rem] "
               delay={30}
               duration={2}
               ease="elastic.out(1,0.3)"
@@ -104,7 +104,7 @@ export default function Home() {
             />
             <SplitText
               text="What do your commits say?"
-              className="text-black text-[2.9rem] font-bold tracking-tighter px-1 m-0"
+              className="text-black 2xl:text-[2.9rem] lg:text-[2.5rem] font-bold tracking-tighter px-1 text-[2rem]"
               delay={30}
               duration={2}
               ease="elastic.out(1,0.3)"
@@ -121,10 +121,10 @@ export default function Home() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 5, opacity: 0 }}
             transition={{ duration: 0.4, ease: "easeIn", delay: 0.5 }}
-            className="font-newTitile text-[1.2rem] my-2 text-gray-600  w-[650px]">
+            className="font-newTitile 2xl:text-[1.2rem] lg:text-[1rem] ml-2 my-2 text-gray-600  lg:w-[650px] w-full pl-10 lg:pl-0">
             We turn your commits into memes and personality types — <br />even <span className="italic text-gray-900 font-bold">fix bug lol</span> says a lot.
           </motion.div>
-          <div className="flex items-center text-[3rem]">
+          <div className="flex items-center mx-auto lg:mx-0 text-[3rem]">
             <motion.div
               initial={{ y: 5, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -133,13 +133,14 @@ export default function Home() {
                 colors={["#9333ea, #3b82f6, #06b6d4, #10b981, #9333ea"]}
                 className=""
               ><div
-                className="text-[2rem] font-heading">Take test</div>
-              </GradientText></motion.div>
+                className="2xl:text-[2rem] lg:text-[1.6rem] text-[1.6rem] font-heading">Take test</div>
+              </GradientText>
+            </motion.div>
             <motion.div
               initial={{ x: 8, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.9, ease: "backIn" }}
-              className="ml-3 font items-center border-2 px-3 rounded-2xl flex gap-1 hover:gap-3 cursor-pointer transition-hover duration-200 ease-in-out hover:border-blue-400">
+              className="2xl:ml-3 ml-2 font items-center border-2 px-3 rounded-2xl flex gap-1 hover:gap-3 cursor-pointer transition-hover duration-200 ease-in-out hover:border-blue-400 2xl:scale-100 lg:scale-85">
               <div className="text-[1.8rem] font-heading m-0 p-0">
                 now
               </div>
@@ -152,7 +153,7 @@ export default function Home() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, ease: "easeIn" }}>
           <video
-            className="absolute top-0 left-0 w-full h-full translate-x-70 rotate-[270deg] scale-145  pointer-events-none m-0 p-0 z-10"
+            className="absolute 2xl:top-0 lg:top-5 left-0 w-full h-full lg:translate-x-60 xl:translate-x-70 rotate-[270deg] 2xl:scale-145 lg:scale-130 pointer-events-none m-0 p-0 z-10 scale-100 translate-x-0 top-22 "
             src="/Untitled.mp4"
             autoPlay
             loop
@@ -163,17 +164,17 @@ export default function Home() {
         </motion.div>
       </div>
       <div
-        className=" w-[100%] rounded-[5rem] bg-blue-100/30 m-0 pb-40 border-1">
+        className=" w-[100%] rounded-[5rem] bg-blue-100/30 m-0 pb-40 border-1 ">
         <div
           ref={howSectionRef}
-          className=" flex justify-center items-center mx-auto gap-x-32 h-[90%] pt-50 pb-20 w-screen">
-          <div className=" w-[30%] h-[30%] ">
+          className=" flex justify-center items-center mx-auto xl:gap-x-32  pt-50 pb-20 w-screen ">
+          <div className=" hidden lg:block xl:w-[30%] xl:h-[30%] w-[40%] h-[40%] ">
             <Lottie animationData={animationData} loop={true} />
           </div>
           <div
-            className="flex flex-col justify-center items-center">
+            className="flex flex-col justify-center items-center mr-10 ">
             <div
-              className="text-[4.5rem] font-[2rem] my-4 font-averie">
+              className="lg:text-[4.5rem] text-[3.2rem] lg:font-[2rem] font-[1.5rem] my-4 font-averie">
               How it works :
             </div>
             <div className="pl-18">
@@ -189,7 +190,7 @@ export default function Home() {
         <div
           className="h-screen w-screen flex  flex-col justify-center items-center">
           <div
-            className=" text-[3rem]  scale-60 font-averie">
+            className=" text-[3rem]  lg:scale-60 scale-88 font-averie">
             <ScrollFloat
               animationDuration={1}
               ease='back.inOut(2)'
@@ -204,7 +205,7 @@ export default function Home() {
             </ScrollFloat>
           </div>
           <div
-            className=" scale-23 font-averie -mt-35">
+            className=" lg:scale-23 scale-40 font-averie lg:-mt-35 -mt-5">
             <ScrollFloat
               animationDuration={1}
               ease='back.inOut(2)'
@@ -224,7 +225,7 @@ export default function Home() {
         {/* Personality type section */}
         <motion.div
           ref={personalitiesRef}
-          className="text-[2.8rem] font-heading ml-40 my-10"
+          className="lg:text-[2.8rem] text-[2rem] font-heading lg:ml-40 ml-18 my-10"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
@@ -267,20 +268,20 @@ export default function Home() {
       <div
         ref={developerRef}>
         <div
-          className="text-[2.8rem] font-heading ml-40 mt-30">
+          className="lg:text-[2.8rem] text-[2.4rem] font-heading lg:ml-30 xl:ml-40 text-center lg:text-start mt-30">
           Meet the Developer :
         </div>
         <div
-          className="flex items-center justify-center gap-20 mt-10 mb-40 mx-20">
+          className="lg:flex items-center justify-center mt-10 mb-40 mx-12">
           <div
-            className="w-[20%]">
+            className="lg:w-[30%] md:w-[30%] xl:w-[20%] mx-auto w-[50%] mb-15 lg:mb-0">
             <img
               src={"/me.png"}
-              className=" rounded-[12rem] scale-110"
+              className=" rounded-[12rem] scale-110 lg:ml-15"
             />
           </div>
           <div
-            className="w-[60%] text-[1.4rem]  font-newTitile px-8 text-justify">
+            className="lg:w-[60%] w-[98%] mx-auto lg:text-[1.4rem] text-[1.3rem] font-newTitile lg:px-8 px-0 text-justify">
             <p>
               I’m Aditya, a 20-year-old developer with a strong passion for web development and DevOps. I love exploring how modern web technologies and cloud-native tools come together to create scalable, reliable, and user-friendly systems. Hackathons have been a big part of my journey — I enjoy the thrill of solving problems under tight deadlines, collaborating with teammates, and turning abstract ideas into working prototypes.</p>
             <p><br />
