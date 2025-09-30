@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface genIconStyle {
   dim?: string;
   style?: string;
@@ -60,3 +62,12 @@ export function CrossTopBar ({ dim, style,onClickHandler }: genIconStyle) {
     height={dim}
     className={` cursor-pointer ${style}`} viewBox="0 0 16.00 16.00" xmlns="http://www.w3.org/2000/svg" version="1.1" fill="none" stroke="#000000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" stroke="#CCCCCC" strokeWidth="0.032"></g><g id="SVGRepo_iconCarrier"> <path d="m11.25 4.75-6.5 6.5m0-6.5 6.5 6.5"></path> </g></svg>
 }
+
+
+export const ChatbotEnter =  React.memo(({ dim, style, onClickHandler }: genIconStyle) => {
+  return <svg width={dim} height={dim} onClick={onClickHandler} className={style} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(90)"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.3284 11.0001V13.0001L7.50011 13.0001L10.7426 16.2426L9.32842 17.6568L3.67157 12L9.32842 6.34314L10.7426 7.75735L7.49988 11.0001L20.3284 11.0001Z" fill="#000000"></path> </g></svg>
+})
+
+export const BlockIcon =  React.memo(({ style }: genIconStyle) => {
+  return <svg fill="currentColor" className={style} version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlSpace="Preserver" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M336,320 c0,8.837-7.163,16-16,16H192c-8.837,0-16-7.163-16-16V192c0-8.837,7.163-16,16-16h128c8.837,0,16,7.163,16,16V320z"></path> </g></svg>
+})

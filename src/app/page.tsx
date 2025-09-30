@@ -13,6 +13,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PersonalityCard } from "./personalityCard";
 import { GithubIcon } from "./icons";
 import { useRefs } from "./RefsContext";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,6 +25,8 @@ export const openProfile = ({ hyperlink }: { hyperlink: string }) => {
 
 
 export default function Home() {
+  const router = useRouter();
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -121,7 +124,7 @@ export default function Home() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 5, opacity: 0 }}
             transition={{ duration: 0.4, ease: "easeIn", delay: 0.5 }}
-            className="font-newTitile 2xl:text-[1.2rem] lg:text-[1rem] ml-2 my-2 text-gray-600  lg:w-[650px] w-full pl-10 lg:pl-0">
+            className="font-newTitile 2xl:text-[1.2rem] lg:text-[1rem] lg:text-start text-center ml-2 my-2 text-gray-600  lg:w-[650px] w-full pl-10 lg:pl-0">
             We turn your commits into memes and personality types — <br />even <span className="italic text-gray-900 font-bold">fix bug lol</span> says a lot.
           </motion.div>
           <div className="flex items-center mx-auto lg:mx-0 text-[3rem]">
@@ -138,6 +141,7 @@ export default function Home() {
             </motion.div>
             <motion.div
               initial={{ x: 8, opacity: 0 }}
+              onClick={() => {router.push('/test')}}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.9, ease: "backIn" }}
               className="2xl:ml-3 ml-2 font items-center border-2 px-3 rounded-2xl flex gap-1 hover:gap-3 cursor-pointer transition-hover duration-200 ease-in-out hover:border-blue-400 2xl:scale-100 lg:scale-85">

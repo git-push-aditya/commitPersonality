@@ -4,6 +4,8 @@ import { CrossTopBar, GithubIcon, TopBarSVG, TwitterIcon } from "./icons";
 import { useRef, useEffect, useState } from "react";
 import { openProfile } from "./page";
 import { useRefs } from "./RefsContext";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -12,20 +14,32 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu"
+
+
+
 export default function TopBar() {
     const { developerRef, testRef, personalitiesRef, storiesRef } = useRefs();
+    const pathname = usePathname();
+    const router = useRouter();
 
     const GetInView = ({ selectedRef }: { selectedRef: React.RefObject<HTMLDivElement | null> }) => {
         selectedRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    const [topBar, setTopBar] = useState<boolean>(false)
+    const [topBar, setTopBar] = useState<boolean>(false);
+
+    const revertBackToHomePage = () => {
+        if(pathname === "/test"){
+            router.push("/");
+        }
+    }
 
 
     const tabStyle = " hover:text-black lg:text-[1.4rem] text-[1.1rem] font-[2rem] text-gray-600 transition-hover hover:-translate-y-1 duration-200 ";
 
     const topbar = useRef<HTMLDivElement | null>(null);
-    const [isVisible, setIsVisible] = useState<boolean>()
+    const [isVisible, setIsVisible] = useState<boolean>();
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -49,10 +63,10 @@ export default function TopBar() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4, ease: "easeIn" }}
-        className="cursor-pointer">
+        className={`cursor-pointer z-10 ${pathname === "/test" ? "bg-blue-100/10" : ""}`}>
         <div
             ref={topbar}
-            className="flex justify-between items-center mt-4 lg:w-[90%] md:w-[96%] w-full mx-auto py-4 xl:pr-10 md:pr-7 pr-5 font-newTitile text-2xl xl:pl-16 md:pl-10 pl-8"
+            className="flex justify-between items-center pt-8 lg:w-[90%] md:w-[96%] w-full mx-auto py-4 xl:pr-10 md:pr-7 pr-5 font-newTitile text-2xl xl:pl-16 md:pl-10 pl-8"
         >
             <div
                 className="xl:text-[1.8rem] text-[1.6rem] font-heading font-[0.5rem]">commitPersonality</div>
@@ -60,19 +74,19 @@ export default function TopBar() {
                 className="hidden flex-1 md:flex items-center justify-center lg:gap-10 gap-5 text-slate-300 hover:text-black transition-colors duration-200">
                 <div
                     className={tabStyle}
-                    onClick={() => GetInView({ selectedRef: testRef })}>Test
+                    onClick={() => { revertBackToHomePage(); GetInView({ selectedRef: testRef })}}>Test
                 </div>
                 <div
                     className={tabStyle}
-                    onClick={() => GetInView({ selectedRef: personalitiesRef })}>Personalities
+                    onClick={() => { revertBackToHomePage(); GetInView({ selectedRef: personalitiesRef })}}>Personalities
                 </div>
                 <div
                     className={tabStyle}
-                    onClick={() => GetInView({ selectedRef: storiesRef })}>Stories
+                    onClick={() => { revertBackToHomePage(); GetInView({ selectedRef: storiesRef })}}>Stories
                 </div>
                 <div
                     className={tabStyle}
-                    onClick={() => GetInView({ selectedRef: developerRef })}>Developer
+                    onClick={() => {revertBackToHomePage(); GetInView({ selectedRef: developerRef })}}>Developer
                 </div>
             </div>
             <div
@@ -163,19 +177,19 @@ export default function TopBar() {
                     className="hidden flex-1 md:flex items-center justify-center lg:gap-10 gap-5 text-slate-300 hover:text-black transition-colors duration-200">
                     <div
                         className={tabStyle}
-                        onClick={() => GetInView({ selectedRef: testRef })}>Test
+                        onClick={() => { revertBackToHomePage(); GetInView({ selectedRef: testRef })}}>Test
                     </div>
                     <div
                         className={tabStyle}
-                        onClick={() => GetInView({ selectedRef: personalitiesRef })}>Personalities
+                        onClick={() => {revertBackToHomePage();GetInView({ selectedRef: personalitiesRef })}}>Personalities
                     </div>
                     <div
                         className={tabStyle}
-                        onClick={() => GetInView({ selectedRef: storiesRef })}>Stories
+                        onClick={() => {revertBackToHomePage(); GetInView({ selectedRef: storiesRef })}}>Stories
                     </div>
                     <div
                         className={tabStyle}
-                        onClick={() => GetInView({ selectedRef: developerRef })}>Developer
+                        onClick={() => {revertBackToHomePage(); GetInView({ selectedRef: developerRef })}}>Developer
                     </div>
                 </div>
                 <div
