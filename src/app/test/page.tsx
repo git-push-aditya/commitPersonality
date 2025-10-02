@@ -3,23 +3,32 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react"
 import SplitText from "../../components/splitText";
 import TextType from '../../components/TextType';
-import { BlockIcon, ChatbotEnter } from "../icons";
-import Skeleton from "../skeleton";
+import { BlockIcon, ChatbotEnter } from "../icons"; 
+import axios from "axios";  
 
 export default function Test() {
 
-    const inputRef = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement | null>(null);
     const [githubId, setGithubId] = useState<string>("");
     const [isPending, setIsPending] = useState<boolean>(false);
     const [isError, setError] = useState<boolean>(false);
 
-    const handleId = () => {
+    useEffect(()=>{
+        inputRef.current?.focus;
+    },[])
+
+    const handleId = async () => {
         try {
             setIsPending(true);
-            const id = inputRef.current?.value;
+            const id = inputRef.current?.value; 
             setGithubId(id ?? " ");
+            const res = await axios.post('/api/commit',{ 
+                gitHubId : id 
+            }); 
+            setIsPending(false);
         } catch (e) {
             setError(true);
+            setIsPending(false)
         }
     }
 
@@ -61,7 +70,7 @@ export default function Test() {
                         initial={{ opacity: 0, y: 55 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0 }}
-                        className="xl:w-[55%] w-[85%] z-50 xl:h-[10%] lg:h-[60%] h-[50%] rounded-[3rem] flex gap-10 items-center pl-5 bg-white shadow-xl hover:shadow-3xl  mb-3 group-hover"
+                        className="xl:w-[55%] w-[85%] z-50 xl:h-[10%] lg:h-[10%] h-[8%] rounded-[3rem] flex gap-10 items-center pl-5 bg-white shadow-xl hover:shadow-3xl  mb-3 group-hover"
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                         <input
@@ -100,31 +109,24 @@ export default function Test() {
                     </motion.div>
                 </>) : (
                     isPending ? (<div
-                        className="h-screen w-screen flex flex-col">
+                        className="h-screen w-screen overflow-hidden flex flex-col justify-center items-center">
                         < motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="xl:mt-40 ml-30"
+                            className=""
                             transition={{ duration: 0.5, ease: "easeInOut" }}
                         >
                             <TextType
                                 text={["Fetching your GitHub commits…", "Parsing and analyzing commit messages…", "Running insights through our LLM engine…", "Assigning your personality (and a joke, of course)…"]}
-                                typingSpeed={30}
+                                typingSpeed={40}
                                 pauseDuration={200}
                                 initialDelay={100}
-                                className="text-black text-[1.9rem] font-averie"
+                                className="text-black xl:text-[1.9rem] lg:text-[1.7rem] md:text-[1.6rem] font-averie text-[1.2rem]"
                                 showCursor={true}
                                 cursorCharacter="|"
                             />
-                        </motion.div>
-                        <Skeleton style=" -translate-y-12 ml-80 scale-x-300 scale-y-30" />
-                        <div
-                            className="flex gap-50">
-                            <Skeleton style=" ml-100 scale-x-380 scale-y-230 mt-15" />
-                            <Skeleton style=" ml-100 scale-x-380 scale-y-230 mt-15" />
-                        </div>
-                        <Skeleton style="scale-y-30 scale-x-780 mt-30 ml-200" />
+                        </motion.div> 
                     </div>
                     ) : (<div>
                         
@@ -135,13 +137,4 @@ export default function Test() {
         </div >
 
     </div >
-}
-
-
-{
-    /*              <motion.div
-                        initial={{ opacity: 0, x: 45 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="xl:mt-40 ml-30 text-[3rem] font-heading text-black/90">Final Verdict - 
-                    </motion.div> */
 }
