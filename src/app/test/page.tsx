@@ -9,15 +9,6 @@ import animationData from "../../components/fNfrenBjw9.json";
 import Lottie from "lottie-react";
 
 
-{/* 
-    payload: {
-        personality,
-        yourPersonalitiy,
-        joke,
-        SWA
-    }
-*/}
-
 export default function Test() {
 
     const inputRef = useRef<HTMLInputElement | null>(null);
