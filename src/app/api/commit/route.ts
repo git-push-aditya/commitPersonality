@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import axios from "axios";
 import { CohereClientV2 } from "cohere-ai";
 
@@ -42,7 +42,7 @@ const personalities = new Map<string, any>([
 ]);
 
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
         const { gitHubId } = body;

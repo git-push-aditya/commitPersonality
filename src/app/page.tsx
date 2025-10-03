@@ -14,6 +14,7 @@ import { PersonalityCard } from "./personalityCard";
 import { GithubIcon } from "./icons";
 import { useRefs } from "./RefsContext";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -279,10 +280,9 @@ export default function Home() {
           className="lg:flex items-center justify-center mt-10 mb-40 mx-12">
           <div
             className="lg:w-[30%] md:w-[30%] xl:w-[20%] mx-auto w-[50%] mb-15 lg:mb-0">
-            <img
+            <Image
               src={"/me.png"}
-              className=" rounded-[12rem] scale-110 lg:ml-15"
-            />
+              className=" rounded-[12rem] scale-110 lg:ml-15" alt={""}            />
           </div>
           <div
             className="lg:w-[60%] w-[98%] mx-auto lg:text-[1.4rem] text-[1.3rem] font-newTitile lg:px-8 px-0 text-justify">

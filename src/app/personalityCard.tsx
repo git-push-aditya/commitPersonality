@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion"
+import Image from "next/image";
 
 interface personalityProp {
     Photo: String;
@@ -26,10 +27,9 @@ export function PersonalityCard({
             className="lg:h-[400px] bg-white lg:w-[80%] w-[90%] lg:flex items-center justify-start mx-auto border-1 hover:border-1 hover:shadow-lg hover:scale-101 hover:-translate-y-1 duration-300 my-8 rounded-[3rem] gap-20 lg:px-20 px-5 py-8"
         >
 
-            <img
+            <Image
                 className="lg:h-[350px] lg:w-[230px] h-[320px] w-[210px] object-cover mx-auto lg:mx-0 "
-                src={getProfilePicId(Photo)}
-            />
+                src={getProfilePicId(Photo)} alt={""}            />
             <div className="flex flex-col lg:w-[70%] w-[100%] gap-4">
                 <div className="font-averie lg:text-[2.3rem] w-[100%] text-[1.8rem] mt-4 mx-auto ">{Name}</div>
 
