@@ -49,7 +49,7 @@ export default function Home() {
   const def = " lg:text-[1.4rem] text-[1.2rem] text-gray-700 tracking-wide ";
   const howSectionRef = useRef<HTMLDivElement>(null);
 
-  const {developerRef, testRef, personalitiesRef, storiesRef} = useRefs();
+  const { developerRef, testRef, personalitiesRef, storiesRef } = useRefs();
 
 
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function Home() {
 
   return (
     <div className="overflow-x-hidden overflow-y-hidden">
-      <div 
+      <div
         ref={testRef}
         className="relative overflow-hidden h-screen w-screen">
         <div className="relative z-20 flex flex-col items-start items-start lg:justify-center h-full w-full 2xl:ml-50  xl:ml-30 lg:ml-20  2xl:-translate-y-30 lg:-translate-y-20 font-heading">
@@ -142,7 +142,7 @@ export default function Home() {
             </motion.div>
             <motion.div
               initial={{ x: 8, opacity: 0 }}
-              onClick={() => {router.push('/test')}}
+              onClick={() => { router.push('/test') }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.9, ease: "backIn" }}
               className="2xl:ml-3 ml-2 font items-center border-2 px-3 rounded-2xl flex gap-1 hover:gap-3 cursor-pointer transition-hover duration-200 ease-in-out hover:border-blue-400 2xl:scale-100 lg:scale-85">
@@ -183,8 +183,10 @@ export default function Home() {
               How it works :
             </div>
             <div className="lg:pl-18 px-5">
-              <div
-                className={pointer}>1.Click "Take Test" -<span className={def}>start instantly, no signup hassle.</span></div>
+              <div className={pointer}>
+                1.Click {"Take Test"} - <span className={def}>start instantly, no signup hassle.</span>
+              </div>
+
               <div
                 className={pointer}>2.Enter your GitHub ID -<span className={def}>we pull your commit messages.</span></div>
               <div
@@ -205,8 +207,7 @@ export default function Home() {
               stagger={0.03}
               scrollContainerRef={undefined}
             >
-              “Behind every bug fix,
-              there's a piece of you."
+              {`“Behind every bug fix, there's a piece of you."`}
             </ScrollFloat>
           </div>
           <div
@@ -282,7 +283,7 @@ export default function Home() {
             className="lg:w-[30%] md:w-[30%] xl:w-[20%] mx-auto w-[50%] mb-15 lg:mb-0">
             <Image
               src={"/me.png"}
-              className=" rounded-[12rem] scale-110 lg:ml-15" alt={""}            />
+              className=" rounded-[12rem] scale-110 lg:ml-15" alt={""} height={400} width={400} />
           </div>
           <div
             className="lg:w-[60%] w-[98%] mx-auto lg:text-[1.4rem] text-[1.3rem] font-newTitile lg:px-8 px-0 text-justify">

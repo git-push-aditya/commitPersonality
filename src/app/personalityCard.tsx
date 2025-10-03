@@ -3,11 +3,11 @@ import { motion } from "framer-motion"
 import Image from "next/image";
 
 interface personalityProp {
-    Photo: String;
-    Name: String;
-    OneLine: String;
-    Behaviour: String;
-    repoSideEffects: String;
+    Photo: string;
+    Name: string;
+    OneLine: string;
+    Behaviour: string;
+    repoSideEffects: string;
 }
 
 export function PersonalityCard({
@@ -29,7 +29,7 @@ export function PersonalityCard({
 
             <Image
                 className="lg:h-[350px] lg:w-[230px] h-[320px] w-[210px] object-cover mx-auto lg:mx-0 "
-                src={getProfilePicId(Photo)} alt={""}            />
+                src={getProfilePicId(Photo)} alt={""} width={210} height={500}      />
             <div className="flex flex-col lg:w-[70%] w-[100%] gap-4">
                 <div className="font-averie lg:text-[2.3rem] w-[100%] text-[1.8rem] mt-4 mx-auto ">{Name}</div>
 
@@ -59,6 +59,6 @@ export function PersonalityCard({
 }
 
 
-function getProfilePicId(id: String) {
+function getProfilePicId(id: string) {
     return `/personalityPic/${id}.png`;
 }

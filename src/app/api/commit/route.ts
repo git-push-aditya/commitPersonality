@@ -6,7 +6,7 @@ const cohere = new CohereClientV2({
     token: process.env.CHAT_API_KEY
 })
 
-const personalities = new Map<string, any>([
+const personalities = new Map<string, unknown>([
     [
         "Conventional Connie",
         {
@@ -109,7 +109,7 @@ const fetchCommits = async ({ gitHubId }: { gitHubId: string }): Promise<string[
     })
 
     const rawCommits = res.data;
-    let commits: string[] = [];
+    const commits: string[] = [];
     for (const el of rawCommits) {
         if (el.type === "PushEvent") {
             for (const commit of el.payload.commits) {
@@ -156,7 +156,7 @@ const assignPersonality = async ({ commits }: { commits: string[] }) => {
 
 const systemMessageForJoke = "You are a witty, friendly AI tasked with creating a sassy, humorous, and light-hearted joke based on a software developer personality description. Rules: - The input will be a personality description of a developer (e.g., Conventional Connie, Hotfix Hank, Verbose Vera, Amendable Andy). - The joke must relate clearly to the traits, quirks, or habits described in the personality.- Keep it non-offensive, non-racist, and work-appropriate.- Do NOT reference real people.- Output only the joke in one or two concise sentences.- Humor should be clever and tech-oriented, suitable for developers.Note : do not repeat the description you receive, create new stuff.";
 
-const getSassyJoke = async ({ personality }: { personality: any }) => {
+const getSassyJoke = async ({ personality }: { personality: unknown }) => {
     try {
         const response = await cohere.chat({
             model: 'command-a-03-2025',
@@ -185,7 +185,7 @@ const systemMessageForSAW = "You are a witty, friendly AI tasked with creating a
 
 
 
-const getStrengthVsWeekness = async ({ personality }: { personality: any }) => {
+const getStrengthVsWeekness = async ({ personality }: { personality: unknown }) => {
     try {
         const response = await cohere.chat({
             model: 'command-a-03-2025',
