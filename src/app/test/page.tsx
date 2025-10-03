@@ -9,6 +9,14 @@ import animationData from "../../components/fNfrenBjw9.json";
 import Lottie from "lottie-react";
 
 
+
+interface persona {
+    oneLine: string;
+    Description: string;
+    repoSideEffect: string;
+}
+
+
 export default function Test() {
 
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -17,7 +25,7 @@ export default function Test() {
     const [isError, setError] = useState<boolean>(false);
 
     const [yourPersonality, setYourPersonality] = useState<string>("");
-    const [descp, setDescp] = useState();
+    const [descp, setDescp] = useState<persona>();
     const [joke, setJoke] = useState<string>();
     const [swa, setSwa] = useState();
 
@@ -49,17 +57,17 @@ export default function Test() {
 
 
 
-useEffect(() => {
-  if (isPending || githubId === "" || isError) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
+    useEffect(() => {
+        if (isPending || githubId === "" || isError) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
 
-  return () => {
-    document.body.style.overflow = "auto";
-  };
-}, [isPending, githubId, isError]);
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [isPending, githubId, isError]);
 
 
     return <div className="h-screen w-screen overflow-y-hidden bg-blue-100/10">
