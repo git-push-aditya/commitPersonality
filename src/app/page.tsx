@@ -178,10 +178,10 @@ export default function Home() {
           <div
             className="flex flex-col justify-center items-center mr-10 ">
             <div
-              className="lg:text-[4.5rem] text-[3.2rem] lg:font-[2rem] font-[1.5rem] my-4 font-averie">
+              className="lg:text-[4.5rem] md:text-[3.2rem] text-[2.5rem] font-[1.5rem] my-4 font-averie text-center md:text-start">
               How it works :
             </div>
-            <div className="pl-18">
+            <div className="lg:pl-18 px-5">
               <div
                 className={pointer}>1.Click "Take Test" -<span className={def}>start instantly, no signup hassle.</span></div>
               <div
@@ -272,7 +272,7 @@ export default function Home() {
       <div
         ref={developerRef}>
         <div
-          className="lg:text-[2.8rem] text-[2.4rem] font-heading lg:ml-30 xl:ml-40 text-center lg:text-start mt-30">
+          className="lg:text-[2.8rem] text-[2.2rem] font-heading lg:ml-30 xl:ml-40 text-center lg:text-start mt-30">
           Meet the Developer :
         </div>
         <div

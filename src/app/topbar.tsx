@@ -80,10 +80,10 @@ export default function TopBar() {
                     className={tabStyle}
                     onClick={() => { revertBackToHomePage(); GetInView({ selectedRef: personalitiesRef })}}>Personalities
                 </div>
-                <div
+{/*                <div
                     className={tabStyle}
                     onClick={() => { revertBackToHomePage(); GetInView({ selectedRef: storiesRef })}}>Stories
-                </div>
+                </div>*/}
                 <div
                     className={tabStyle}
                     onClick={() => {revertBackToHomePage(); GetInView({ selectedRef: developerRef })}}>Developer
@@ -136,12 +136,12 @@ export default function TopBar() {
                             }}>
                                 Personalities
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => {
+{/*                            <DropdownMenuItem onClick={() => {
                                 setTopBar(false);
                                 setTimeout(() => GetInView({ selectedRef: testRef }), 100);
                             }}>
                                 Stories
-                            </DropdownMenuItem>
+                            </DropdownMenuItem>*/}
                             <DropdownMenuItem onClick={() => {
                                 setTopBar(false);
                                 setTimeout(() => GetInView({ selectedRef: developerRef }), 100);
@@ -183,10 +183,10 @@ export default function TopBar() {
                         className={tabStyle}
                         onClick={() => {revertBackToHomePage();GetInView({ selectedRef: personalitiesRef })}}>Personalities
                     </div>
-                    <div
+{/*                    <div
                         className={tabStyle}
                         onClick={() => {revertBackToHomePage(); GetInView({ selectedRef: storiesRef })}}>Stories
-                    </div>
+                    </div>*/}
                     <div
                         className={tabStyle}
                         onClick={() => {revertBackToHomePage(); GetInView({ selectedRef: developerRef })}}>Developer
@@ -232,12 +232,12 @@ export default function TopBar() {
                             }}>
                                 Personalities
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => {
+{/*                            <DropdownMenuItem onClick={() => {
                                 setTopBar(false);
                                 setTimeout(() => GetInView({ selectedRef: testRef }), 100);
                             }}>
                                 Stories
-                            </DropdownMenuItem>
+                            </DropdownMenuItem>*/}
                             <DropdownMenuItem onClick={() => {
                                 setTopBar(false);
                                 setTimeout(() => GetInView({ selectedRef: developerRef }), 100);

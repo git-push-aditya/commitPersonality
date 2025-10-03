@@ -3,8 +3,20 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react"
 import SplitText from "../../components/splitText";
 import TextType from '../../components/TextType';
-import { BlockIcon, ChatbotEnter } from "../icons"; 
-import axios from "axios";  
+import { BlockIcon, ChatbotEnter } from "../icons";
+import axios from "axios";
+import animationData from "../../components/fNfrenBjw9.json";
+import Lottie from "lottie-react";
+
+
+{/* 
+    payload: {
+        personality,
+        yourPersonalitiy,
+        joke,
+        SWA
+    }
+*/}
 
 export default function Test() {
 
@@ -13,34 +25,51 @@ export default function Test() {
     const [isPending, setIsPending] = useState<boolean>(false);
     const [isError, setError] = useState<boolean>(false);
 
-    useEffect(()=>{
+    const [yourPersonality, setYourPersonality] = useState<string>("");
+    const [descp, setDescp] = useState();
+    const [joke, setJoke] = useState<string>();
+    const [swa, setSwa] = useState();
+
+
+    useEffect(() => {
         inputRef.current?.focus;
-    },[])
+    }, [])
 
     const handleId = async () => {
         try {
             setIsPending(true);
-            const id = inputRef.current?.value; 
+            const id = inputRef.current?.value;
             setGithubId(id ?? " ");
-            const res = await axios.post('/api/commit',{ 
-                gitHubId : id 
-            }); 
+            const res = await axios.post('/api/commit', {
+                gitHubId: id
+            });
+
+            setYourPersonality(res.data.payload.personality);
+            setJoke(res.data.payload.joke);
+            setSwa(res.data.payload.SWA);
+            setDescp(res.data.payload.yourPersonalitiy);
+
             setIsPending(false);
         } catch (e) {
             setError(true);
-            setIsPending(false)
+            setIsPending(false);
         }
     }
 
 
 
-    useEffect(() => {
-        const prev = document.body.style.overflow;
-        document.body.style.overflow = "hidden";
-        return () => {
-            document.body.style.overflow = prev;
-        };
-    }, []);
+useEffect(() => {
+  if (isPending || githubId === "" || isError) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, [isPending, githubId, isError]);
+
 
     return <div className="h-screen w-screen overflow-y-hidden bg-blue-100/10">
         <div
@@ -125,14 +154,77 @@ export default function Test() {
                                 className="text-black xl:text-[1.9rem] lg:text-[1.7rem] md:text-[1.6rem] font-averie text-[1.2rem]"
                                 showCursor={true}
                                 cursorCharacter="|"
-                            />
-                        </motion.div> 
+                            />{/**have to include is error */}
+                        </motion.div>
                     </div>
-                    ) : (<div>
-                        
-                    </div>)
+                    ) : (!isError ? (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.4, ease: "easeIn" }}
+                            className="lg:flex flex-col justify-center overflow-y-auto h-screen w-screen">
+                            <div
+                                className="font-heading lg:text-[2.5rem] lg:ml-23  text-[2.2rem] text-center mt-40">
+                                Final Verdict :
+                                <span className=" text-violet-900">
+                                    {yourPersonality}
+                                </span>
+                            </div>
+                            <div
+                                className="lg:flex mt-8 lg:mt-6 justify-center gap-10">
+                                <div
+                                    className="lg:w-[44%] lg:mx-0 mx-auto w-[90%] border-1 rounded-[2rem] px-8 py-4 hover:scale-101 transition-hover duration-200 bg-gray-100/40 ">{/*Joke and swa */}
+                                    <div
+                                        className="text-[1.8rem] font-averie">
+                                        Joke :
+                                    </div>
+                                    <div
+                                        className="text-[1.4rem] font-newTitile leading-tight text-slate-800">
+                                        {joke}
+                                    </div>
+                                    <div
+                                        className="text-[1.8rem] font-averie">
+                                        Strength and Weekness :
+                                    </div>
+                                    <div
+                                        className="text-[1.4rem] font-newTitile leading-tight text-slate-800">
+                                        {swa}
+                                    </div>
+                                </div>
+                                <div
+                                    className="lg:w-[44%] lg:mx-0 mx-auto w-[90%] mt-7 lg:mt-0 border-1 rounded-[2rem] px-8 py-4 hover:scale-101 transition-hover duration-200 bg-gray-100/40">
+                                    <div
+                                        className="text-[1.8rem] font-averie">One Line : </div>
+                                    <div
+                                        className="text-[1.4rem] font-newTitile leading-tight text-slate-800">{descp?.oneLine ?? ""}</div>
+                                    <div
+                                        className="text-[1.8rem] font-averie">Description : </div>
+                                    <div
+                                        className="text-[1.4rem] font-newTitile leading-tight text-slate-800">{descp?.Description}</div>
+                                    <div
+                                        className="text-[1.8rem] font-averie">Repo side Effects : </div>
+                                    <div
+                                        className="text-[1.4rem] font-newTitile leading-tight text-slate-800">{descp?.repoSideEffect}</div>
+                                </div>
+
+                            </div>
+                            <div
+                                className="text-center mt-10 text-[1.5rem] text-indigo-950 font-averie">
+                                ...Feel free to share with your friends...
+                            </div>
+                        </motion.div>) : (<div
+                            className="flex justify-center items-center">
+                            <div className="w-[90%] h-[90%]  ">
+                                <Lottie animationData={animationData} loop={true} />
+                                <div
+                                    className="text-center font-averie lg:text-[1.4rem] text-[1.2rem] -mt-10 text-red-950">
+                                    Some error occured or not enough commits..
+                                </div>
+                            </div>
+                        </div>))
                 )}
             </AnimatePresence>
+
 
         </div >
 

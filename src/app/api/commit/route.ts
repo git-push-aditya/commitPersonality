@@ -51,29 +51,33 @@ export async function POST(req: Request) {
 
         const commits = await fetchCommits({ gitHubId });
 
+        if(commits.length <= 4){
+            return NextResponse.json({
+                status : "failure",
+                payload : {
+                    message  : "insufficiant commits."
+                }
+            },{
+                status : 404
+            })
+        }
+
         // assining personality from cohere ai
 
         const personality = await assignPersonality({ commits });
 
-        console.log(personality);
-
         const yourPersonalitiy = personalities.get(personality);
-
 
         //getting a a joke
         const joke = await getSassyJoke({personality : yourPersonalitiy});
 
-        console.log(joke);
-
         //getting strength vs weekness
         const SWA = await getStrengthVsWeekness({ personality : yourPersonalitiy});
-
-        console.log(SWA);
-
-        console.log(yourPersonalitiy)
+ 
         return NextResponse.json({
             status: "success",
             payload: {
+                personality,
                 yourPersonalitiy,
                 joke,
                 SWA
@@ -150,7 +154,7 @@ const assignPersonality = async ({ commits }: { commits: string[] }) => {
 }
 
 
-const systemMessageForJoke = "You are a witty, friendly AI tasked with creating a sassy, humorous, and light-hearted joke based on a software developer personality description. Rules: - The input will be a personality description of a developer (e.g., Conventional Connie, Hotfix Hank, Verbose Vera, Amendable Andy). - The joke must relate clearly to the traits, quirks, or habits described in the personality.- Keep it non-offensive, non-racist, and work-appropriate.- Do NOT reference real people.- Output only the joke in one or two concise sentences.- Humor should be clever and tech-oriented, suitable for developers.";
+const systemMessageForJoke = "You are a witty, friendly AI tasked with creating a sassy, humorous, and light-hearted joke based on a software developer personality description. Rules: - The input will be a personality description of a developer (e.g., Conventional Connie, Hotfix Hank, Verbose Vera, Amendable Andy). - The joke must relate clearly to the traits, quirks, or habits described in the personality.- Keep it non-offensive, non-racist, and work-appropriate.- Do NOT reference real people.- Output only the joke in one or two concise sentences.- Humor should be clever and tech-oriented, suitable for developers.Note : do not repeat the description you receive, create new stuff.";
 
 const getSassyJoke = async ({ personality }: { personality: any }) => {
     try {
@@ -177,7 +181,7 @@ const getSassyJoke = async ({ personality }: { personality: any }) => {
 
 
 
-const systemMessageForSAW = "You are a witty, friendly AI tasked with creating a sassy, humorous, and light-hearted strength vs weakness based on a software developer personality description. Rules: - The input will be a personality description of a developer (e.g., Conventional Connie, Hotfix Hank, Verbose Vera, Amendable Andy). - The strength vs weekness must relate clearly to the traits, quirks, or habits described in the personality.- Keep it non-offensive, non-racist, and work-appropriate.- Do NOT reference real people.- Output only the strength and weekness statements properly structures in one or two concise sentences in each defence.- Humor should be clever and tech-oriented, suitable for developers.";
+const systemMessageForSAW = "You are a witty, friendly AI tasked with creating a sassy, humorous, and light-hearted strength vs weakness based on a software developer personality description. Rules: - The input will be a personality description of a developer (e.g., Conventional Connie, Hotfix Hank, Verbose Vera, Amendable Andy). - The strength vs weekness must relate clearly to the traits, quirks, or habits described in the personality as if they were superhero in parallel universe.- Keep it non-offensive, non-racist, and work-appropriate.- Do NOT reference real people.- Output only the strength and weekness statements properly structures in one or two concise sentences in each defence.- Humor should be clever and tech-oriented, suitable for developers. Note : do not repeat the description you receive, create new stuff.";
 
 
 
@@ -196,8 +200,12 @@ const getStrengthVsWeekness = async ({ personality }: { personality: any }) => {
             ],
         });
 
-        return (response.message?.content?.[0] as { text: string })?.text
+        const rawSwa = (response.message?.content?.[0] as { text: string })?.text
             ?? "Sorry, I wasn't able to generate a response";
+
+        const refinedSwa = rawSwa.replace(/\*\*/g, "").replace(/ Weakness:/, "<br />Weakness:");
+     
+        return refinedSwa;
     } catch (e) {
         console.error(e);
         return "something"
