@@ -15,15 +15,9 @@ import { GithubIcon } from "./icons";
 import { useRefs } from "./RefsContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { openProfile } from "./utils";
 
 gsap.registerPlugin(ScrollTrigger);
-
-export const openProfile = ({ hyperlink }: { hyperlink: string }) => {
-  window.open(hyperlink, "_blank", "noopener,noreferrer");
-}
-
-
-
 
 export default function Home() {
   const router = useRouter();

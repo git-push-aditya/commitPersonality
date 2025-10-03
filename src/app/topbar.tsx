@@ -2,7 +2,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { CrossTopBar, GithubIcon, TopBarSVG, TwitterIcon } from "./icons";
 import { useRef, useEffect, useState } from "react";
-import { openProfile } from "./page";
+import { openProfile } from "./utils";
 import { useRefs } from "./RefsContext";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
