@@ -1,4 +1,4 @@
-# 🚀 Commit Personality
+# Commit Personality
 
 [![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://commit-personality.notaditya.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
