@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
 
         const commits = await fetchCommits({ gitHubId });
 
-        if(commits.length <= 4){
+        if(commits.length == 0){
             return NextResponse.json({
                 status : "failure",
                 payload : {
